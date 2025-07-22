@@ -1,12 +1,16 @@
 from flask import Flask, request
 import requests
 import json
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Load environment variables from .env file
 
 app = Flask(__name__)
 
-ACCESS_TOKEN = "EAFU91yTp844BPNSSXNTtzPvhsFvYL33nm8xON7Si3QcCisTUlsamSIrZBZAa28JRVVoGyVilGc31hBcs9HZBfw87ZC1mZBTqN30JNwe2ZCKICB1upUh35433ov4hX7q1yZAMPRMl7psYBVt8jsUJMpFNspNr2hu6OFkz4bNRuYbFbQtfMklOINy8PRI7CLCKyoYAZC4aVZBWadMoByrmXGteISgZCO4HGjs88xcK44BTm4PP0MNerLDAZBaJMW5FlYuggZDZD"
-PHONE_NUMBER_ID = "739888019204601"
-VERIFY_TOKEN = "vtu_verify_token"
+ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
+PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
+VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
 
 # 🧠 In-memory transaction history (user_id -> list of actions)
 user_history = {}
@@ -35,7 +39,6 @@ def webhook():
                     sender = message["from"]
                     text = message["text"]["body"].strip().lower()
 
-                    # Initialize history for user if not present
                     if sender not in user_history:
                         user_history[sender] = []
 
